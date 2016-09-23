@@ -7,6 +7,7 @@ function Article (opts) {
 }
 
 Article.prototype.toHtml = function(scriptTemplateId) {
+  // First two essential Handlesbars lines in one
   var renderTemplate = Handlebars.compile($(scriptTemplateId).html());
 
   this.daysAgo = parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000);
@@ -16,7 +17,9 @@ Article.prototype.toHtml = function(scriptTemplateId) {
     this.publishStatus = this.publishedOn ? 'published ' + this.daysAgo + ' days ago' : '(draft)';
   }
   // TODO: Parse any markdown with marked!
+  this.body = marked(this.body);
 
+// Instead of assigning to html (third essential line of Handlebars), return: all that's needed
   return renderTemplate(this);
 };
 
