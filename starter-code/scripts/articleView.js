@@ -67,8 +67,8 @@ articleView.setTeasers = function() {
 
 articleView.initNewArticlePage = function() {
   $('#export-field').hide();
-  $('#article-export').on('focus', function() {
-    $('this').select();
+  $('#article-json').on('focus', function() {
+    $(this).select();
   });
 
   $('#new-form').on('change', articleView.create);   // passing in a function, not calling it - created by the handler
