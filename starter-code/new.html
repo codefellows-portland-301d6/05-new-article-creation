@@ -27,6 +27,12 @@
         <section class="article-body">{{{body}}}</section>
       </article>
     </script>
+    <script id="author-filter-template" type="text/x-handlebars-template">
+      <option value="{{author}}">{{author}}</option>
+     </script>
+     <script id="category-filter-template" type="text/x-handlebars-template">
+      <option value="{{category}}">{{category}}</option>
+     </script>
     </head>
   <body>
     <header class="site-header clearfix">
@@ -48,7 +54,24 @@
       <section id="write" class="tab-content">
         <h1>New Article</h1>
         <!-- TODO: Set up a form to accept user input for a new blog article: -->
-
+        <form id="new-form" action="#">
+          <label>
+            <input id="article-title" type="text" placeholder="Article Title" required>
+          </label>
+          <textarea id="article-body" rows="8" cols="40" required></textarea>
+          <label>
+            <input id="article-author" type="text" placeholder="Author Name" required>
+          </label>
+          <label>
+            <input id="article-author-url" type="text" placeholder="Author's URL" required>
+          </label>
+          <label>
+            <input id="article-category" type="text" placeholder="Category" required>
+          </label>
+          <label>
+            <input id="article-published" type="checkbox">Published
+          </label>
+        </form>
       </section>
       <section id="article-preview" class="tab-content"></section>
       <section id="article-export">
