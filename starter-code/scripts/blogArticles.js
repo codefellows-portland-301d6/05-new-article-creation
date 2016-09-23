@@ -1,4 +1,5 @@
 var ourLocalData = [
+  {"title":"Code Fellows","author":"Chris Bruner","authorUrl":"http://github.com/QuantumArchive","category":"Awesome","body":"<p>Code Fellows is awesome yo!</p>\n","publishedOn":"2016-09-23T20:23:52.603Z","daysAgo":0,"publishStatus":"(published today)"},
   {
     title:       'Bacon Ipsum',
     category:    'food',

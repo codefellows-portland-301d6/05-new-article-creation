@@ -16,6 +16,8 @@ Article.prototype.toHtml = function(scriptTemplateId) {
     this.publishStatus = this.publishedOn ? 'published ' + this.daysAgo + ' days ago' : '(draft)';
   }
   // TODO: Parse any markdown with marked!
+  
+  this.body = marked(this.body); //reassign the variable
 
   return renderTemplate(this);
 };
