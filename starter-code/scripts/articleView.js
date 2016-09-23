@@ -65,6 +65,48 @@ articleView.setTeasers = function() {
   });
 };
 
+// Highlights after clicking on field with json
+articleView.initNewArticlePage = function() {
+  $('#exportfield').hide();
+  $('#article-json').on('focus', function() {
+    $(this).select();
+  });
+
+  // Everytime new-form changes, create new article (passed in, function called by event handler --> callback)
+  $('#new-form').on('change', articleView.create);
+};
+
+// "Live update" functionality
+articleView.create = function () {
+  // Clear out preview
+  $('#article-preview').empty();
+
+
+  // Create new article based on field data (pulled from dom)
+  var formArticle = new Article({
+    title: $('#article-title').val(),
+    author: $('#articel-author').val(),
+    authorUrl: $('#article-author-url').val(),
+    category: $('#article-category').val(),
+    body: $('#article-body').val(),
+    // 0 is falsy value --> use ternary operator
+    publishedOn: $('#article-published:checked').length ? new Date() : null
+  });
+
+  var newArticleHtml = formArticle.toHtml('#article-template');
+  $('#article-preview').append(newArticleHtml);
+
+  $('pre code').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+
+  $('#export-field').show();
+  $('#article-preview').show();
+  $('#article-json').val(JSON.stringify(formArticle));
+};
+
+articleView.initNewArticlePage();
+
 articleView.render();
 articleView.handleCategoryFilter();
 articleView.handleAuthorFilter();
