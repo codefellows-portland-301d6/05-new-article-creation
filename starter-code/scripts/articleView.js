@@ -65,8 +65,44 @@ articleView.setTeasers = function() {
   });
 };
 
+articleView.initNewArticlePage = function() {
+  $('#export-field').hide();
+  $('#article-export').on('focus', function() {
+    $('this').select();
+  });
+
+  $('#new-form').on('change', articleView.create);   // passing in a function, not calling it - created by the handler
+};
+
+articleView.create = function() {
+  $('#article-preview').empty();
+
+  var formArticle = new Article({
+    title: $('#article-title').val(),
+    author: $('#article-author').val(),
+    authorUrl: $('#article-author-url').val(),
+    category: $('#article-category').val(),
+    body: $('#article-body').val(),
+    publishedOn: $('#article-published:checked').length ? new Date().toDateString() : null
+  });
+
+  var newArticleHtml = formArticle.toHtml('#article-template');
+  $('#article-preview').append(newArticleHtml);
+
+  $('pre code').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+
+  $('#export-field').show();
+  $('#article-preview').show();
+  $('#article-json').val(JSON.stringify(formArticle));
+
+};
+
+
 articleView.render();
 articleView.handleCategoryFilter();
 articleView.handleAuthorFilter();
 articleView.handleMainNav();
 articleView.setTeasers();
+articleView.initNewArticlePage();
