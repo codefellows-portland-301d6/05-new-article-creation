@@ -65,6 +65,47 @@ articleView.setTeasers = function() {
   });
 };
 
+articleView.initNewArticlePage = function() {
+  $('#export-field').hide();
+  $('#article-json').on('focus', function() {
+    $(this).select();
+  });
+
+  $('#new-form').on('change', articleView.create);
+};
+
+articleView.create = function() {
+  $('#article-preview').empty();
+
+  var formArticle = new Article({
+    title: $('#article-title').val(),
+    author: $('#article-author').val(),
+    authorUrl: $('#article-author-url').val(),
+    category: $('#article-category').val(),
+    body: $('#article-body').val(),
+    //? and : are shortcut for if, else conditionals
+    publishedOn: $('#article-published:checked').length ? new Date() : null
+  });
+  //takes the article-template html
+  //pass location of template into new file
+  var newArticleHtml = formArticle.toHtml('#article-template');
+  //append to DOM
+  $('#article-preview').append(newArticleHtml);
+
+  //i = index, block = block of code
+  $('pre code').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+  $('#export-field').show();
+  $('#article-preview').show();
+  $('#article-json').val(JSON.stringify(formArticle));
+};
+
+
+
+
+articleView.initNewArticlePage();
+
 articleView.render();
 articleView.handleCategoryFilter();
 articleView.handleAuthorFilter();
