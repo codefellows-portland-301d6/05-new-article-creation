@@ -48,8 +48,23 @@
       <section id="write" class="tab-content">
         <h1>New Article</h1>
         <!-- TODO: Set up a form to accept user input for a new blog article: -->
-        <form class="" action="index.html" method="post">
-
+        <form id="new-form" action="index.html" method="post">
+          <label>
+            <input type="text" id="article-title" placeholder="Article Title" required>
+          </label>
+          <textarea id="article-body" rows="8" cols="40" required></textarea>
+          <label>
+            <input type="text" id="article-author" placeholder="Author Name" required>
+          </label>
+          <label>
+            <input type="text" id="article-author-url" placeholder="Author Url" required>
+          </label>
+          <label>
+            <input type="text" id="article-category" placeholder="Category" required>
+          </label>
+          <label>
+            <input type="checkbox" id="article-published">&nbsp; Published
+          </label>
         </form>
       </section>
       <section id="article-preview" class="tab-content"></section>
