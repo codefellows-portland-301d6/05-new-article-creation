@@ -5,7 +5,7 @@ function Article (opts) {
     this[keys] = opts[keys];
   };
 }
-
+// Line 10 is the ahdlebars template tool
 Article.prototype.toHtml = function(scriptTemplateId) {
   var renderTemplate = Handlebars.compile($(scriptTemplateId).html());
 
@@ -16,7 +16,7 @@ Article.prototype.toHtml = function(scriptTemplateId) {
     this.publishStatus = this.publishedOn ? 'published ' + this.daysAgo + ' days ago' : '(draft)';
   }
   // TODO: Parse any markdown with marked!
-
+  this.body = marked(this.body);
   return renderTemplate(this);
 };
 
