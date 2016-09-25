@@ -80,7 +80,7 @@ articleView.initNewArticlePage = function() {
   $('#new-form').on('change', articleView.create);
 };
 
-//build a json object from article elements
+//build a new article (from user inputs) as a json formatted obejct
 var formArticle = new Article() ({
   title: $('#article-title').val(),
   author: $('#article-author').val(),
@@ -90,8 +90,27 @@ var formArticle = new Article() ({
   publishedOn: $('#article-published:checked').length ? new Date ().toDateString() : null
 });
 
+//grab the json object created above and method ????
+var newArticleHtml = formArticle.toHtml('#article-template');
+//render in article preview with append
+$('#article-preview').append(newArticleHtml);
+
+
+//need to look this up, this is highlight functionality
+$('pre code').each(function(i, block) {
+  hljs.highlightBlock(block);
+});
+
+//show what is exported in its field, the artile preview, and the contents of the json string after running .stringify method on json object
+$('#export-field').show();
+$('#article-preview').show();
+$('#article-json').val(JSON.stringify(formArticle));
+
+//call all the methods on the articleView object
 articleView.render();
 articleView.handleCategoryFilter();
 articleView.handleAuthorFilter();
 articleView.handleMainNav();
 articleView.setTeasers();
+//add call to init new article
+articleView.initNewArticlePage();
