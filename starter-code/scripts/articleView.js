@@ -76,9 +76,19 @@ articleView.initNewArticlePage = function() {
 
   //when a new form registers a change, the handler is told to create a new article view; we are passing in a function, a call-back function here.
 
-  //the .change method is a way to bind the call-back funciton to the new-form element here. This method works specifically with input, text area, select elements. 
+  //the .change method is a way to bind the call-back funciton to the new-form element here. This method works specifically with input, text area, select elements.
   $('#new-form').on('change', articleView.create);
-}
+};
+
+//build a json object from article elements
+var formArticle = new Article() ({
+  title: $('#article-title').val(),
+  author: $('#article-author').val(),
+  authorUrl: $('#article-author-url').val(),
+  category: $('#article-category').val(),
+  body: $('#article-body').val(),
+  publishedOn: $('#article-published:checked').length ? new Date ().toDateString() : null
+});
 
 articleView.render();
 articleView.handleCategoryFilter();
