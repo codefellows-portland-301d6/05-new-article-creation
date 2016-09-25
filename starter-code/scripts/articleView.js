@@ -64,6 +64,21 @@ articleView.setTeasers = function() {
     }
   });
 };
+//TODO: Initialize New Article
+//ADD NEW ARTICLE
+//add method to articleView object to initialize new article page
+articleView.initNewArticlePage = function() {
+  $('#export-field').hide();
+  //This json part is a little unclear to me; I think what this does is highlights the json string whenever this div gets focus; is this so we can easily copy and paste the json string for our assignment?
+  $('#article-json').on('focus', function() {
+    $(this).select();
+  });
+
+  //when a new form registers a change, the handler is told to create a new article view; we are passing in a function, a call-back function here.
+
+  //the .change method is a way to bind the call-back funciton to the new-form element here. This method works specifically with input, text area, select elements. 
+  $('#new-form').on('change', articleView.create);
+}
 
 articleView.render();
 articleView.handleCategoryFilter();
