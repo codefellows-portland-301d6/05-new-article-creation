@@ -7,6 +7,7 @@ function Article (opts) {
 }
 
 Article.prototype.toHtml = function(scriptTemplateId) {
+  console.log('scriptTemplateId', scriptTemplateId);
   var renderTemplate = Handlebars.compile($(scriptTemplateId).html());
 
   this.daysAgo = parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000);

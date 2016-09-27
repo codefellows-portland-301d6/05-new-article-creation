@@ -3,7 +3,7 @@ var articleView = {};
 
 articleView.render = function() {
   articles.forEach(function(a) {
-    $('#articles').append(a.toHtml('#article-template'));
+    $('#articles').append(a.toHtml('#article-template') );
     $('#author-filter').append(a.toHtml('#author-filter-template'));
     if($('#category-filter option:contains("'+ a.category + '")').length === 0) {
       $('#category-filter').append(a.toHtml('#category-filter-template'));
@@ -80,31 +80,36 @@ articleView.initNewArticlePage = function() {
   $('#new-form').on('change', articleView.create);
 };
 
-//build a new article (from user inputs) as a json formatted obejct
-var formArticle = new Article() ({
-  title: $('#article-title').val(),
-  author: $('#article-author').val(),
-  authorUrl: $('#article-author-url').val(),
-  category: $('#article-category').val(),
-  body: $('#article-body').val(),
-  publishedOn: $('#article-published:checked').length ? new Date ().toDateString() : null
-});
+articleView.create = function() {
+  $('#article-preview').empty();
 
-//grab the json object created above and method ????
-var newArticleHtml = formArticle.toHtml('#article-template');
-//render in article preview with append
-$('#article-preview').append(newArticleHtml);
+  var formArticle = new Article({
+    title: $('#article-title').val(),
+    author: $('#article-author').val(),
+    authorUrl: $('#article-author-url').val(),
+    category: $('#article-category').val(),
+    body: $('#article-body').val(),
+    publishedOn: $('#article-published:checked').length ? new Date().toDateString() : null
+  });
+
+  //grab the json object created above and method ????
+  var newArticleHtml = formArticle.toHtml('#article-template');
+  //render in article preview with append
+  $('#article-preview').append(newArticleHtml);
 
 
-//need to look this up, this is highlight functionality
-$('pre code').each(function(i, block) {
-  hljs.highlightBlock(block);
-});
+  //need to look this up, this is highlight functionality
+  $('pre code').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
 
-//show what is exported in its field, the artile preview, and the contents of the json string after running .stringify method on json object
-$('#export-field').show();
-$('#article-preview').show();
-$('#article-json').val(JSON.stringify(formArticle));
+  //show what is exported in its field, the artile preview, and the contents of the json string after running .stringify method on json object
+  $('#export-field').show();
+  $('#article-preview').show();
+  $('#article-json').val(JSON.stringify(formArticle));
+};
+//build a new article (from user inputs) as a js formatted obejct
+
 
 //call all the methods on the articleView object
 articleView.render();
