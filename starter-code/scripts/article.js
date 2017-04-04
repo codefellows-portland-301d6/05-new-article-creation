@@ -7,6 +7,7 @@ function Article (opts) {
 }
 
 Article.prototype.toHtml = function(scriptTemplateId) {
+  console.log('scriptTemplateId', scriptTemplateId);
   var renderTemplate = Handlebars.compile($(scriptTemplateId).html());
 
   this.daysAgo = parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000);
@@ -16,7 +17,8 @@ Article.prototype.toHtml = function(scriptTemplateId) {
     this.publishStatus = this.publishedOn ? 'published ' + this.daysAgo + ' days ago' : '(draft)';
   }
   // TODO: Parse any markdown with marked!
-
+  //whatever is posted to the html using the toHtml function will be passed to the marked function and marked down
+  this.body = marked(this.body);
   return renderTemplate(this);
 };
 

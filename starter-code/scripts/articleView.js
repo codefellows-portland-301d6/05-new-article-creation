@@ -3,7 +3,7 @@ var articleView = {};
 
 articleView.render = function() {
   articles.forEach(function(a) {
-    $('#articles').append(a.toHtml('#article-template'));
+    $('#articles').append(a.toHtml('#article-template') );
     $('#author-filter').append(a.toHtml('#author-filter-template'));
     if($('#category-filter option:contains("'+ a.category + '")').length === 0) {
       $('#category-filter').append(a.toHtml('#category-filter-template'));
@@ -64,9 +64,58 @@ articleView.setTeasers = function() {
     }
   });
 };
+//TODO: Initialize New Article
+//ADD NEW ARTICLE
+//add method to articleView object to initialize new article page
+articleView.initNewArticlePage = function() {
+  $('#export-field').hide();
+  //This json part is a little unclear to me; I think what this does is highlights the json string whenever this div gets focus; is this so we can easily copy and paste the json string for our assignment?
+  $('#article-json').on('focus', function() {
+    $(this).select();
+  });
 
+  //when a new form registers a change, the handler is told to create a new article view; we are passing in a function, a call-back function here.
+
+  //the .change method is a way to bind the call-back funciton to the new-form element here. This method works specifically with input, text area, select elements.
+  $('#new-form').on('change', articleView.create);
+};
+
+articleView.create = function() {
+  $('#article-preview').empty();
+
+  var formArticle = new Article({
+    title: $('#article-title').val(),
+    author: $('#article-author').val(),
+    authorUrl: $('#article-author-url').val(),
+    category: $('#article-category').val(),
+    body: $('#article-body').val(),
+    publishedOn: $('#article-published:checked').length ? new Date().toDateString() : null
+  });
+
+  //grab the json object created above and method ????
+  var newArticleHtml = formArticle.toHtml('#article-template');
+  //render in article preview with append
+  $('#article-preview').append(newArticleHtml);
+
+
+  //need to look this up, this is highlight functionality
+  $('pre code').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+
+  //show what is exported in its field, the artile preview, and the contents of the json string after running .stringify method on json object
+  $('#export-field').show();
+  $('#article-preview').show();
+  $('#article-json').val(JSON.stringify(formArticle));
+};
+//build a new article (from user inputs) as a js formatted obejct
+
+
+//call all the methods on the articleView object
 articleView.render();
 articleView.handleCategoryFilter();
 articleView.handleAuthorFilter();
 articleView.handleMainNav();
 articleView.setTeasers();
+//add call to init new article
+articleView.initNewArticlePage();
